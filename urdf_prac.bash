@@ -34,7 +34,7 @@ fi
 
 source devel/setup.bash
 
-cd myrobot
+cd src/myrobot
 
 if [ -d "urdf" ]; then
     echo "urdf directory exists already."
