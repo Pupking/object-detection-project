@@ -1,0 +1,275 @@
+<?xml version="1.0" ?>
+<robot name="mfwr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.203125 0.23828125 0.28515625 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  
+  
+
+<link name="link_chassis">
+    <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <mass value="0.878"/>
+        <inertia ixx="0.003565046" ixy="0.0" ixz="0.0" iyy="0.009967129" iyz="0.0" izz="0.006767916"/>
+    </inertial>
+    <collision>
+        <geometry>
+            <box size="0.3 0.215 0.05"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+            <box size="0.3 0.215 0.05"/>
+        </geometry>
+        <material name="white"/>            
+    </visual>
+</link>
+
+<link name="link_frw">
+    <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0 1.5707 1.5707"/>
+        <mass value="0.034"/>
+        <inertia ixx="0.00005123" ixy="0.0" ixz="0.0" iyy="0.00005123" iyz="0.0" izz="0.0000307"/>
+    </inertial>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </visual>
+</link>
+
+<joint name="link_chassis__link_frw" type="continuous">
+    <origin xyz="0.1175 0.121 -0.01" rpy="0.0 0.0 0.0"/>
+    <parent link="link_chassis"/>
+    <child link="link_frw"/>
+    <axis xyz="0.0 1.0 0.0" rpy="0 0 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+</joint>
+
+<transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_chassis__link_frw">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  
+<link name="link_brw">
+    <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0 1.5707 1.5707"/>
+        <mass value="0.034"/>
+        <inertia ixx="0.00005123" ixy="0.0" ixz="0.0" iyy="0.00005123" iyz="0.0" izz="0.0000307"/>
+    </inertial>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </visual>
+</link>
+<joint name="link_chassis__link_brw" type="continuous">
+    <origin xyz="-0.1175 0.121 -0.01" rpy="0.0 0.0 0.0"/>
+    <parent link="link_chassis"/>
+    <child link="link_brw"/>
+    <axis xyz="0.0 1.0 0.0" rpy="0 0 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+</joint>
+
+<transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_chassis__link_brw">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+<link name="link_flw">
+    <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0 1.5707 1.5707"/>
+        <mass value="0.034"/>
+        <inertia ixx="0.00005123" ixy="0.0" ixz="0.0" iyy="0.00005123" iyz="0.0" izz="0.0000307"/>
+    </inertial>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </visual>
+</link>
+<joint name="link_chassis__link_flw" type="continuous">
+    <origin xyz="0.1175 -0.121 -0.01" rpy="0.0 0.0 0.0"/>
+    <parent link="link_chassis"/>
+    <child link="link_flw"/>
+    <axis xyz="0.0 1.0 0.0" rpy="0 0 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+</joint>
+<transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_chassis__link_flw">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+<link name="link_blw">
+    <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0 1.5707 1.5707"/>
+        <mass value="0.034"/>
+        <inertia ixx="0.00005123" ixy="0.0" ixz="0.0" iyy="0.00005123" iyz="0.0" izz="0.0000307"/>
+    </inertial>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+        <geometry>
+            <cylinder radius="0.0425" length="0.027"/>
+        </geometry>
+    </visual>
+</link>
+<joint name="link_chassis__link_blw" type="continuous">
+    <origin xyz="-0.1175 -0.121 -0.01" rpy="0.0 0.0 0.0"/>
+    <parent link="link_chassis"/>
+    <child link="link_blw"/>
+    <axis xyz="0.0 1.0 0.0" rpy="0 0 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+</joint>
+<transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_chassis__link_blw">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/mfwr</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="link_chassis">
+    <material>Gazebo/White</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="link_frw">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="link_brw">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="link_flw">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="link_blw">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo>
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <updateRate>100.0</updateRate>
+    <robotNamespace>/mfwr</robotNamespace>
+    <leftFrontJoint>link_chassis__link_flw</leftFrontJoint>
+    <rightFrontJoint>link_chassis__link_frw</rightFrontJoint>
+    <leftRearJoint>link_chassis__link_blw</leftRearJoint>
+    <rightRearJoint>link_chassis__link_brw</rightRearJoint>
+    <wheelSeparation>0.235</wheelSeparation>
+    <wheelDiameter>0.085</wheelDiameter>
+    <robotBaseFrame>link_chassis</robotBaseFrame>
+    <torque>20</torque>
+    <topicName>cmd_vel</topicName>
+    <commandTopic>cmd_vel</commandTopic>
+    <broadcastTF>false</broadcastTF>
+  </plugin>
+</gazebo>
+
+</robot>
+   
