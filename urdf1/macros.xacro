@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="chassis" params="name">
+    <link name="link_chassis">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.878"/>
+            <inertia ixx="0.003565046" ixy="0.0" ixz="0.0" iyy="0.009967129" iyz="0.0" izz="0.006767916"/>
+        </inertial>
+        <collision>
+        <geometry>
+            <box size="0.3 0.215 0.05"/>
+        </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.3 0.215 0.05"/>
+            </geometry>
+            <material name="white"/>            
+        </visual>
+    </link>
+  </xacro:macro>
+  
+  <xacro:macro name="wheels" params="name radius length">
+        <link name="${name}">
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0 1.5707 1.5707"/>
+                <mass value="0.034"/>
+                <inertia ixx="0.00005123" ixy="0.0" ixz="0.0" iyy="0.00005123" iyz="0.0" izz="0.0000307"/>
+            </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="0.0425" length="0.027"/>
+            </geometry>
+        </visual>
+        </link>
+  </xacro:macro>
+  
+  <xacro:macro name="wheel_joints" params="name child_link origin_xyz">
+    <joint name="${name}" type="continuous">
+        <origin xyz="${origin_xyz}" rpy="0.0 0.0 0.0"/>
+        <parent link="link_chassis"/>
+        <child link="${child_link}"/>
+        <axis xyz="0.0 1.0 0.0" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="transmissions" params="name joint_name actuator_name">
+        <transmission name="${name}">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${actuator_name}">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+  </xacro:macro>
+
+</robot>
